@@ -387,7 +387,16 @@ and replace the contents of the config.json with the below configuration details
     }
     ```
 
-### Step-5 : Build and Run the Application
+### Step-5 : Download video 
+We will be using a test video from the Intel IoT DevKit repository. It shows workers entering a simulated restricted zone and will be used to test the EIS pipeline.
+
+```bash
+cd ~/IEdgeinsights/docker_setup/test_videos
+wget https://github.com/intel-iot-devkit/sample-videos/blob/master/worker-zone-detection.mp4
+```
+
+
+### Step-6 : Build and Run the Application
 Run the following commands to build and run the customized restricted zone notifier apllication using EIS.
 
 #### Generate certificates:
@@ -423,7 +432,7 @@ This will take the inputs from [docker_setup/config/provision_config.json](docke
 
  ![](images/restricted_zone_notifier_result.png)
 
-## Step-6 : Running the application on different Intel Accelerators
+## Step-7 : Running the application on different Intel Accelerators
 Now, we will explore ways of improving performance by running the same code on various Intel's Accelerators such as GPUs and Intel® Myriad™-VPUs.
 
 The Restricted zone notifier application can be run on different hardwares by customizing the configuration JSON file (restricted_zone_notifier.json).
