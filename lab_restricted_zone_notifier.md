@@ -343,6 +343,7 @@ To integrate the developed restricted zone notifier demo, following files to be 
     sudo gedit .env
     ```
 - Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
+- Make sure that DEV_MODE = false 
 
 #### Update VideoIngestion module
 - To complete this, run the following commands in the terminal
