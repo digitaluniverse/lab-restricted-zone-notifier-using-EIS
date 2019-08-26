@@ -76,7 +76,7 @@ The purpose of trigger algorithm is to select frames of interest from the camera
 
 The purpose of classifier algorithm is to load the frame from the trigger into the SSD model to detect location of people and a secondary algorithm that detects if people are inside the restricted zone. If people are detected in the restricted zone a warning should be sent to the output frame and a warning should be sent over OPC/UA to the operator.
 
-- To create trigger a custom classifier go to **~/IEdgeinsights/algo/dpm/classification/classifier**  
+- To create trigger a custom classifier go to **~/IEdgeinsights/algo/dpm/classification/classifiers**  
 - Create a folder with name  **"restrictedzonenotifier"** and create a file with name ```__init__.py```
 - Enter the following commands in terminal to complete this.
 
