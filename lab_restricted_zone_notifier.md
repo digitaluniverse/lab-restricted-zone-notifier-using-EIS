@@ -473,4 +473,4 @@ The Myriad™ Inference Engine plugin supports VPU devices such as the Intel® N
 
 We have created a custom application that has the user deploy the Restricted Zone Notifier Reference Implementation using the Edge Insights Software framework.
 
-[Home](./restricted_zone_notifier.md)
+[Home](./README.md)
