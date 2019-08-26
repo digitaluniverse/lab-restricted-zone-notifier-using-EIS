@@ -359,7 +359,8 @@ To integrate the developed restricted zone notifier demo, following files to be 
 
     ```bash
     cd ~/IEdgeinsights/DataAnalytics/PointDataAnalytics
-    sudo gedit classifier_setup.py
+    sudo gedit classifier_startup.py
+    //->probably wrong // sudo gedit classifier_setup.py
     ```
 - Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
 
