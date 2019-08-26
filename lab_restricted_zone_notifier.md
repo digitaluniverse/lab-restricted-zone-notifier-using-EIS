@@ -392,7 +392,7 @@ We will be using a test video from the Intel IoT DevKit repository. It shows wor
 
 ```bash
 cd ~/IEdgeinsights/docker_setup/test_videos
-wget https://github.com/intel-iot-devkit/sample-videos/blob/master/worker-zone-detection.mp4
+wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-detection.mp4
 ```
 
 
@@ -416,6 +416,12 @@ This will take the inputs from [docker_setup/config/provision_config.json](docke
     sudo make provision CERT_PATH=../cert-tool/Certificates/
     sudo make install CERT_PATH=../cert-tool/Certificates/
     ```
+- Next check to see if the EIS pipeline is running properly: 
+
+    ```bash
+    tail -f /opt/intel/iei/logs/consolidatedLogs/iei.log
+    ```
+
 
 #### IEI visualizer setup
 
