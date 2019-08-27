@@ -395,8 +395,14 @@ cd ~/IEdgeinsights/docker_setup/test_videos
 wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-detection.mp4
 ```
 
+### Step-6: Copy Model 
+The ia_data_analytics docker container which runs the classification using openVINO requires a specific person detection model to detect when workers enter the restricted zone. The model needs to be copied into the docker setup path so that the ia_data_analytics container can locate it:
 
-### Step-6 : Build and Run the Application
+```bash
+cp /opt/intel/openvino_2019.2.242/deployment_tools/open_model_zoo/tools/downloader/Retail/object_detection/pedestrian/rmnet_ssd/0013/dldt/FP32/ ~/IEdgeinsights/docker_setup/config/algo_config/restricted_zone_notifier
+```
+
+### Step-7 : Build and Run the Application
 Run the following commands to build and run the customized restricted zone notifier apllication using EIS.
 
 #### Generate certificates:
@@ -438,7 +444,7 @@ This will take the inputs from [docker_setup/config/provision_config.json](docke
 
  ![](images/restricted_zone_notifier_result.png)
 
-## Step-7 : Running the application on different Intel Accelerators
+## Step-8 : Running the application on different Intel Accelerators
 Now, we will explore ways of improving performance by running the same code on various Intel's Accelerators such as GPUs and Intel® Myriad™-VPUs.
 
 The Restricted zone notifier application can be run on different hardwares by customizing the configuration JSON file (restricted_zone_notifier.json).
