@@ -399,7 +399,9 @@ wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-de
 The ia_data_analytics docker container which runs the classification using openVINO requires a specific person detection model to detect when workers enter the restricted zone. The model needs to be copied into the docker setup path so that the ia_data_analytics container can locate it:
 
 ```bash
-cp /opt/intel/openvino_2019.2.242/deployment_tools/open_model_zoo/tools/downloader/Retail/object_detection/pedestrian/rmnet_ssd/0013/dldt/FP32/ ~/IEdgeinsights/docker_setup/config/algo_config/restricted_zone_notifier
+cp /opt/intel/openvino_2019.2.242/deployment_tools/open_model_zoo/tools/downloader/Retail/object_detection/pedestrian/rmnet_ssd/0013/dldt/FP32/* ~/IEdgeinsights/docker_setup/config/algo_config/restricted_zone_notifier
+
+cp /opt/intel/openvino_2019.2.242/deployment_tools/open_model_zoo/tools/downloader/Retail/object_detection/pedestrian/rmnet_ssd/0013/dldt/FP16/* ~/IEdgeinsights/docker_setup/config/algo_config/restricted_zone_notifier
 ```
 
 ### Step-7 : Build and Run the Application
