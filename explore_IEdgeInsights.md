@@ -11,7 +11,44 @@ This JSON file is the main configuration file for the entire data pipeline. Usin
 
 Take a look at the file now and notice some key elements: 
 
-```JSON
+Video Ingestion:
+
+```json
+"data_ingestion_manager": {
+        "ingestors": {
+            "video_file": {
+                "video_file": "./test_videos/pcb_d2000.avi",
+                "encoding": {
+                    "type": "jpg",
+                    "level": 100
+                },
+                "img_store_type": "inmemory_persistent",
+                "loop_video": true,
+                "poll_interval": 0.2
+            }
+        }
+    }
+```
+
+Here we see the video file set as "./test_videos/pcb_d2000.avi" this path is relative to ~/Workshop/IEdgeInsights-V1.5LTS/docker_setup
+
+Trigger Setup:
+
+```json
+    "triggers": {
+        "pcb_trigger": {
+            "training_mode": false,
+            "n_total_px": 300000,
+            "n_left_px": 1000,
+            "n_right_px": 1000
+        }
+```
+
+Here we see the trigger set as "pcb_trigger" - this specifices that we will use ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/pcb_trigger.py as the trigger script for our application. The script that creates the trigger is ~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion/VideoIngestion.py 
+
+
+Classifier Setup:
+```json
  "classification": {
         "max_workers": 1,
         "classifiers": {
@@ -31,11 +68,11 @@ Take a look at the file now and notice some key elements:
     }
 ```
 
-This block defines the classification module where we specify:
+This block defines the classification module where we specify the classifer name "pcbdemo" - This will be used by ~/Workshop/IEdgeInsights-V1.5LTS/algos/dpm/classification/classifier_manager.py to set the connection between the Trigger module and Classification module by using the ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/pcbdemo folder as the location of the classification scripts.
 
-The classifer name "pcbdemo" - This will be used by ~/Workshop/IEdgeInsights-V1.5LTS/algos/dpm/classification/classifier_manager.py to set the connection between the Trigger module and Classification module by using the ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/pcbdemo folder as the location of the classification scripts.
+Note: This folder must be in this location and have the same name as the classifier to function. 
 
-Note: This folder must be in this location and have the same name as the classifier to function.  
+This block also sets the reference image and regioin of interest files as well as the intermediate representation model files for our inference model. 
 
 **Video Ingestion**   
 The Video Ingestion module in the EIS is a user defined function, which uses the Data Ingestion library to ingest data to InfluxDB and Image store
