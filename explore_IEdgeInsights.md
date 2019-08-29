@@ -7,29 +7,29 @@ To understand how it works, let's first understand key components of this softwa
 **Configuration File (factory_pcbdemo.json)**   
 This file is the main configuration file for the entire work stream. It uses a standard JSON format. Using this file, a user can define the data ingestion, storage, triggers, and classifiers.
 
-*Location:*~/IEdgeInsights/docker_setup/config/factory_pcbdemo.json
+*Location:*~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/factory_pcbdemo.json
 
 **Video Ingestion**   
 The Video Ingestion module in the EIS is a user defined function, which uses the Data Ingestion library to ingest data to InfluxDB and Image store
 
 ![](images/VideoIngestion.png)
 
-*Location:*~/IEdgeInsights /VideoIngestion/
+*Location:*~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion/
 
 **Trigger**   
 This filters the incoming data stream, mainly to reduce the storage and computation requirements by only passing on frames of interest. All input frames are passed to the Trigger.  When it detects a frame of interest based on user defined functions, it activates a signal which causes that frame to be saved in the Image Store database, and the metadata for that frame in the InfluxDB database.
 
-*Location:*~/IEdgeInsights /algos/dpm/triggers/
+*Location:*~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/
 
 **Classifier**   
 The is a user defined algorithm that is run on each frame of interest. Kapacitor, an open source data processing engine, subscribes to the meta-data stream , and the classifier receives the meta-data from Kapacitor. The classifier pulls the frame from the Image Store, and saves the analysis results as metadata back into the InfluxDB database.
 
-*Location:*~/IEdgeInsights /algos/dpm/classification/classifiers/
+*Location:*~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/
 
 **visualizer**   
       This is to view resulting output
 
-*Location:*~/IEdgeInsights /tools/visualizer/
+*Location:*~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer/
 
 
 ***By now we understood the components, Let's understand how data flows between these components.***
@@ -97,13 +97,13 @@ The raw image frame is returned in response to the GetBlob() command.
 **Description**   
 Printed Circuits Boards(PCBs) are being inspected for quality control to check if any defects(missing component or components are short) are there with the PCBs. To find out the defects a good quality PCB will be compared against the defective ones and pin point the location of the defect as well.
 
-Input to the application can be from a live stream or from a video file. Here video file (~/IEdgeinsights/docker_setup/test_videos/pcb_d2000.avi) is used for this demo.
+Input to the application can be from a live stream or from a video file. Here video file (~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/test_videos/pcb_d2000.avi) is used for this demo.
 
 **Build and Run Sample.**  
 To **build** the sample pcbdemo sample application execute the following commands.
 
 ```bash
-cd ~/IEdgeinsights/tools/visualizer/
+cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer/
 sudo make build
 ```
 
