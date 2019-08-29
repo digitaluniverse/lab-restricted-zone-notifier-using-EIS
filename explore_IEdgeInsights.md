@@ -128,24 +128,40 @@ Printed Circuits Boards(PCBs) are being inspected for quality control to check i
 Input to the application can be from a live stream or from a video file. Here video file (~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/test_videos/pcb_d2000.avi) is used for this demo.
 
 **Build and Run Sample.**  
-To **build** the sample pcbdemo sample application execute the following commands.
+To **build and run** the sample pcbdemo sample application execute the following commands.
 
 ```bash
 cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer/
-sudo make build
+sudo make build run
 ```
 
-To **run** the sample application , execute the below command:
+Once this completes run the following command to view the log:
 
 ```bash
-sudo make run CERT_PATH=${iei_install_dir}/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=true
+tail -f /opt/intel/iei/logs/consolidatedLogs/iei.log
 ```
+If everything is running properly you will see:
+
+```
+ia_data_agent         | I0829 11:46:55.835922       6 StreamManager.go:191] Publishing topic: stream1_results
+```
+Which is indicating that the ia_data_agent container is streaming data on the "stream1_results" topic. 
+
+To **Visualize** the sample application , execute the below command:
+
+```bash
+cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
+source ./source.sh
+python3 visualize.py -D true
+```
+This will run the vizualizer in developer mode (no certificates needed). 
+
 **Pcb-Demo Output**   
 Once the application successfully runs. The output window will be poped up as below.
 ![](images/pcbdemo_result.png)
 
 
-Now we understood the Intel® Edge Insights Software framework components and run pcbdemo application successfully.    
+You should now understand the Intel® Edge Insights Software framework components and how run pcbdemo application successfully.    
 Let's Deploy a Restricted Zone Notifier Reference implementation using Intel® Edge Insights Software framework in our next lab.
 
 ## Next Lab
