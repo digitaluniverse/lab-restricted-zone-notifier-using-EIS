@@ -10,12 +10,32 @@ This JSON file is the main configuration file for the entire data pipeline. Usin
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config/factory_pcbdemo.json
 
 Take a look at the file now and notice some key elements: 
+
 ```JSON
-"classification":{
-      "max_workers":1,
-      "classifiers":{
-            "p
-            "pcb_trigger"
+ "classification": {
+        "max_workers": 1,
+        "classifiers": {
+            "pcbdemo": {
+                "trigger": [
+                    "pcb_trigger"
+                ],
+                "config": {
+                    "ref_img": "./algos/algo_config/ref_pcbdemo/ref.png",
+                    "ref_config_roi": "./algos/algo_config/ref_pcbdemo/roi_2.json",
+                    "model_xml": "./algos/algo_config/ref_pcbdemo/model_2.xml",
+                    "model_bin": "./algos/algo_config/ref_pcbdemo/model_2.bin",
+                    "device": "CPU"
+                }
+            }
+        }
+    }
+```
+
+This block defines the classification module where we specify:
+
+The classifer name "pcbdemo" - This will be used by ~/Workshop/IEdgeInsights-V1.5LTS/algos/dpm/classification/classifier_manager.py to set the connection between the Trigger module and Classification module by using the ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/pcbdemo folder as the location of the classification scripts.
+
+Note: This folder must be in this location and have the same name as the classifier to function.  
 
 **Video Ingestion**   
 The Video Ingestion module in the EIS is a user defined function, which uses the Data Ingestion library to ingest data to InfluxDB and Image store
