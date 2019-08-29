@@ -396,13 +396,16 @@ cd ~/IEdgeinsights/docker_setup/test_videos
 wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-detection.mp4
 ```
 
-### Step-6: Copy Model 
-The ia_data_analytics docker container which runs the classification using openVINO requires a specific person detection model to detect when workers enter the restricted zone. The model needs to be copied into the docker setup path so that the ia_data_analytics container can locate it:
+### Step-6: Download Model 
+The ia_data_analytics docker container which runs the classification using openVINO requires a specific person detection model to detect when workers enter the restricted zone. Usually you would use the OpenVINO model downloader to get the models but we will just pull them from the workshop Github repo.  The model files need to be copied into the docker setup path so that the ia_data_analytics container can locate it:
 
 ```bash
-cp /opt/intel/openvino_2019.2.242/deployment_tools/open_model_zoo/tools/downloader/Retail/object_detection/pedestrian/rmnet_ssd/0013/dldt/FP32/* ~/IEdgeinsights/docker_setup/config/algo_config/restricted_zone_notifier
-
-cp /opt/intel/openvino_2019.2.242/deployment_tools/open_model_zoo/tools/downloader/Retail/object_detection/pedestrian/rmnet_ssd/0013/dldt/FP16/* ~/IEdgeinsights/docker_setup/config/algo_config/restricted_zone_notifier
+cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config
+mkdir restricted_zone_notifier && cd mkdir restricted_zone_notifier
+wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013-fp16.bin
+wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013-fp16.xml
+wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013.bin
+wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013.xml
 ```
 
 ### Step-7 : Build and Run the Application
