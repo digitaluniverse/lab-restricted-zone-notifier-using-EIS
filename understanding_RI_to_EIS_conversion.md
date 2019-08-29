@@ -13,29 +13,33 @@ First, let us have a look on the below code flow for the restricted zone notifie
 
 ### 1. Provide input to run the application
 
-In Python based reference implementation, the input is provided using command line . Whereas in EIS framework, a JSON file is provided where an user provide the inputs for inferencing. The JSON files are available in **IEdgeInsights/docker_setup/config/algo_config** directory.
+In Python based reference implementation the model to use in classification, plugin libraries, the hardware to run the code on, and the source video are set on the command line at launch. In the EIS framework, a JSON file is created that has all of these parameters set. The JSON file is available in the **IEdgeInsights/docker_setup/config/algo_config** directory.
 ![](images/rzn_input.png)
 
 
 ### 2. Initialization and loading IR to the plugin for target device
 
-  In EIS framework, a **Classifier** module is provided where the plugin initialization and inference can be done.
+  In the EIS framework, a **Classifier** module is provided where the plugin initialization and inference can be done.
 
   The Classifier module has two methods: `__init__` and `classify`.
 
-  `__init__`  : This method is used for initialization and loading IR to the plugin for target device.  
-  `classify` : To do the inferencing and capturing the inference output, this method can be used.
+  `__init__`  : This method is used for initialization and loading the intermediate representation model to the plugin for the target device.  
+  `classify` : This method is used for inferencing and capturing the inference output.
+  
+To create the __init__.py module the initialization parameters from the main() function of our pytthon script are ported over. 
+  
 ![](images/rzn_initialization.png)
 
 ### 3. Capture frames from input file
-- In python based RI, the  frames captured from image/video using cv2.Videocapture and frames used for further processing during inferencing.
+- In the python based code, the  frames are captured from image/video using cv2.Videocapture.
 
 
-- In EIS framework, this has to be done using **Trigger** module.Trigger module in the EIS software receives the captured frames from VideoIngestion module. The purpose of trigger algorithm is to select frames of interest from the camera stream. The algorithms depends on the use case, people monitoring might need classifier algorithms to execute on all frames from the camera whereas a use case like the sample application “pcbdemo” would need the classifier to execute on only the frames where the PCB board is in the center of the frame.
+- In EIS framework, the fframe capture is done using the **Trigger** module.The trigger module in the EIS stack receives the captured frames from the VideoIngestion module. The purpose of the trigger algorithm is to select frames of interest from the camera stream and pass them to the VideoAnalytics module. The algorithm to use in the trigger modul depends on the use case. For people monitoring you might need a classifier algorithm to execute on all frames whereas a use case like the sample application “pcbdemo” would need the classifier to execute on only the frames where the PCB board is in the center of the frame.
 
-- Once processed video frames as they are received and call the callback registered by the register_trigger_callback() method if the frame should trigger the execution of the classifier
+- After the video frames are processed by the trigger they are registered by the register_trigger_callback() method to be passed to the classifier. 
 
-The porting has to be done as below:
+The section of code in main.py that deals with the video frame input is ported to the resttricted zone notifier trigger script.
+
 ![](images/rzn_trigger.png)
 
 ### 4. Execute SSD model and parse results
