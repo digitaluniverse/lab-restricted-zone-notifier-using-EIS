@@ -1,11 +1,11 @@
 # How to Convert a python based RI to Classifier and Trigger based Intel® Edge Insights (EIS) Software
 
-In this lab, We will understand how to port an application developed in python and run as single script to the classifier and trigger based Intel® Edge Insights (EIS) Software framework. Here, we will understand this with an example (**Restricted Zone Notifier**).
+In this lab, We will understand how to port an application developed in python and run as single script to the classifier and trigger based Intel® Edge Insights (EIS) Software framework. We will start with the **Restricted Zone Notifier** reference implementation which can be found here: https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
 
 ## Understanding Restricted Zone Notifier code flow
-This sample is intended to demonstrate how to use Inference Engine included in the Intel® Distribution of OpVIenNO™ toolkit and the Intel® Deep Learning Deployment Toolkit to improve assembly line safety for human operators and factory workers.
+This sample is intended to demonstrate how to use Inference Engine included in the Intel® Distribution of OpVIenNO™ toolkit and the Intel® Deep Learning Deployment Toolkit can be used to improve assembly line safety for human operators and factory workers.
 
-First, let us have a look on the below code flow for restricted zone notifier.
+First, let us have a look on the below code flow for the restricted zone notifier application.
 
 ![](images/flowchart.jpg)
 
@@ -13,7 +13,7 @@ First, let us have a look on the below code flow for restricted zone notifier.
 
 ### 1. Provide input to run the application
 
-In Python based RI, input is provided using command line . Whereas in EIS framework, a JSON file is provided where an user provide the inputs for inferencing. The JSON files are available in **IEdgeInsights/docker_setup/config/algo_config** directory.
+In Python based reference implementation, the input is provided using command line . Whereas in EIS framework, a JSON file is provided where an user provide the inputs for inferencing. The JSON files are available in **IEdgeInsights/docker_setup/config/algo_config** directory.
 ![](images/rzn_input.png)
 
 
