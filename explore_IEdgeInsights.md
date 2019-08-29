@@ -1,13 +1,21 @@
 ## Explore Intel® Edge Insights Software
 ### What is Intel® Edge Insights Software
-Industrial Edge Insights Software (EIS) from Intel is a scalable solution for the industrial sector addressing various manufacturing usages which include data collection, storage and analytics on a variety of hardware nodes that span across the factory floor.
+Industrial Edge Insights Software (EIS) from Intel is a scalable solution for the industrial sector addressing various manufacturing uses which include data collection, storage, and analytics on a variety of hardware nodes that span across the factory floor.
 ### How Industrial Edge Insights Software Works
-To understand how it works, let's first understand key components of this software.
+To understand how it works, let's first understand key components of this software stack.
 
 **Configuration File (factory_pcbdemo.json)**   
-This file is the main configuration file for the entire work stream. It uses a standard JSON format. Using this file, a user can define the data ingestion, storage, triggers, and classifiers.
+This JSON file is the main configuration file for the entire data pipeline. Using this file, a user can define the data ingestion, storage, triggers, and classifiers to be used in the application.
 
-*Location:*~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/factory_pcbdemo.json
+*Location:*~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config/factory_pcbdemo.json
+
+Take a look at the file now and notice some key elements: 
+```JSON
+"classification":{
+      "max_workers":1,
+      "classifiers":{
+            "p
+            "pcb_trigger"
 
 **Video Ingestion**   
 The Video Ingestion module in the EIS is a user defined function, which uses the Data Ingestion library to ingest data to InfluxDB and Image store
