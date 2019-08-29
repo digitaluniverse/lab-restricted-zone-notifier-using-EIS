@@ -14,7 +14,8 @@ In our previous Lab, we have successfully ran the pcbdemo application using the 
 ## Step-1 : Develope a Custom trigger
 The purpose of trigger algorithm is to select frames of interest from the camera stream. The algorithms depends on the use case, people monitoring might need classifier algorithms to execute on all frames from the camera whereas a use case like the sample application “pcbdemo” would need the classifier to execute on only the frames where the PCB board is in the center of the frame
 
-- To create trigger a custom trigger go to ***~/IEdgeinsights/algo/dpm/triggers/*** and create a file with name restricted_zone_notifier_trigger.py
+- To create trigger a custom trigger go to ***~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers*** and create a trigger file with name restricted_zone_notifier_trigger.py
+
 - Enter the following commands in terminal to complete this.
 
     ```bash
