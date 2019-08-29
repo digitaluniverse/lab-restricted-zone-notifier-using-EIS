@@ -42,26 +42,24 @@ The section of code in main.py that deals with the video frame input is ported t
 
 ![](images/rzn_trigger.png)
 
-### 4. Execute SSD model and parse results
+### 4. Run Classification and parse results
 
-This part of the sub-module needs to be done just after the inferencing results. So it can be included in the classifier `__init__.py` is available in IEdgeInsights/algos/dpm/classification
+After the trigger selects a frame it is sent to the classifier to run through the model and generate the results needed.
+To set up the classifier we use the code from main.py which defines the Single Shot Detector (SSD) model and port it over to `~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/restrictedzonenotifier/__init__.py` 
 
-The porting has to be done as below:
 ![](images/rzn_ssd_out.png)
 
 ### 5. Update Status and Alert information
-- The status and alert information is also included in classifier `__init__.py` is available in IEdgeInsights/algos/dpm/classification/classifiers directory.
-classify() returns display and defect information.
+- The status and alert information is also included in the same classifier `__init__.py`. This classify method returns defect information as well as statistics about the inference time and throughput of the data pipeline.
 
 ![](images/rzn_output.png)
 
 ### 6. Messaging Thread
-In Python based RI Worker thread (Messaging Thread) that publishes MQTT messages to Server to display the output.
+The Python based reference implementation messaging thread publishes MQTT messages to Server to display the output.
 
-In EIS framework, a OPC/UA based visualizer application is available. We will use that to view the resulting output.
-The warning message from the classifier will be displayed using visualizer application along with inference time details. So the display and defect information will be send to OPC/UA server from classifier.
+In the EIS framework the messages are published over OPC/UA by the Data Agent Service. We will use an OPC/UA client to view those messages. This OPC/UA client is located in ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer and does not need to be customized for this application.  
 
-Now we understood, how a python based RI can be converted to Classifier and Trigger based Intel® Edge Insights (EIS) Software. So, let's implement in our next lab.
+You should now have a better idea of how an existing code base can be converted to Classifier and Trigger based Intel® Edge Insights (EIS) Software. In the next lab we will implement all of these modules and run the restricted zone notifier using EIS.
 
 ## Next Lab
 [Deploying Restricted Zone Notifier using Edge Insights Software framework](./lab_restricted_zone_notifier.md)
