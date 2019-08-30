@@ -539,7 +539,13 @@ The Myriad™ Inference Engine plugin supports VPU devices such as the Intel® N
     "model_bin": "./algos/algo_config/restricted_zone_notifier/person-detection-retail-0013-fp16.bin",
     "device": "MYRIAD"
     ```
-- Repeat the **Step-5** to build and run the application and observe the performance.
+Now re run the application:
+
+```bash
+    cd ~/IEdgeinsights/docker_setup/
+    sudo make provision CERT_PATH=../cert-tool/Certificates/
+    sudo make install CERT_PATH=../cert-tool/Certificates/
+```
 
 ### Lesson Learnt
 
