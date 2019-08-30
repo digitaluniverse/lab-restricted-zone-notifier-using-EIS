@@ -484,22 +484,36 @@ Another way to increase performance and free up CPU capacity is by running the s
 
 The Restricted zone notifier application can be run on different hardwares by customizing the configuration JSON file (restricted_zone_notifier.json).
 
-### Run application with CPU first
-- To Run on CPU, execute the following commands:
+### Run application with GPU
+- To Run on GPU we need to edit the restricted_zone_notifier.json file.
+Execute the following commands:
 
     ```bash
     cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/alog_config/
     sudo gedit restricted_zone_notifier.json
     ```
-- Change the device to CPU ```device=CPU``` inside JSON file
-- Repeat the **Step-5** to build and run the application and observe the performance.
+- Change the device to GPU ```device=GPU``` inside JSON file
 
-  ***NOTE***-The Restricted Zone Notifier application runs on CPU by default.
+Now re run the application:
 
+```bash
+    cd ~/IEdgeinsights/docker_setup/
+    sudo make provision CERT_PATH=../cert-tool/Certificates/
+    sudo make install CERT_PATH=../cert-tool/Certificates/
+```
+- Next check to see if the EIS pipeline is running properly: 
 
-### Now, do inference with GPU
-- In order to run on an Intel® GPU, we simply change from ```device=CPU``` to ```device=GPU```.
-- Repeat the **Step-5** to build and run the application and observe the performance.
+```bash
+    tail -f /opt/intel/iei/logs/consolidatedLogs/iei.log
+```
+Now launch the visualizer: 
+
+```bash
+cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
+    sudo make build
+    sudo make run CERT_PATH=~/Workshop/IEdgeInsights-v1.5LTS/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=true
+```
+This will lower the stress on the CPU and cepending on the CPU and GPU of your device you will see a performance increase. 
 
 ### Next, inference with Myriad™ VPU
 The Myriad™ Inference Engine plugin supports VPU devices such as the Intel® Neural Compute Stick.
