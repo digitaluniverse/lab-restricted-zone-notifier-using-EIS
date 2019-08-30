@@ -448,9 +448,39 @@ This will take the inputs from [docker_setup/config/provision_config.json](docke
  On successful execution, the application sends a warning message when a person is detected in the restricted zone. The output looks like below screenshot.
 
  ![](images/restricted_zone_notifier_result.png)
+ 
+ Notice also the JSON object which is written to the terminal: 
+ 
+ ```json
+ Received message: {"Measurement":"stream1_results","Channels":3.0,"Height":1080.0,"ImgHandle":"persist_bc736c96","Width":1920.0,"cam_sn":"camera-serial-number","defects":"[{\"type\":1,\"tl\":[436,237],\"br\":[686,959]}]","display_info":"[{\"info\":\"Inferencetime:42.387ms\",\"priority\":0},{\"info\":\"Throughput:23.592fps\",\"priority\":0},{\"info\":\"WorkerSafe:False\",\"priority\":2},{\"info\":\"HUMANINASSEMBLYAREA:PAUSETHEMACHINE!\",\"priority\":2}]","encoding":"jpg","idx":59979.0,"image_id":"600bef07-3915-42e3-818b-c0fe76d2c40a","machine_id":"tool_2","part_id":"e0550d60-3a4b-4f2d-82fc-98fbebdf8626","timestamp":1567196325.5299864,"influx_ts":1567196325532124746
+```
+
+Here we can see the alert status and performance of the application. 
 
 ## Step-8 : Optimizing Application
-Now, we will explore ways of improving performance of the application  by running the same code on various Intel's Accelerators such as GPUs and Intel® Myriad™-VPUs.
+Now, we will explore ways of improving performance of the application.
+
+## Visualizer 
+Fetching individual frames from the image store via the Data Agent can slow down the overall performance of the application. In a industrial safty application such as the zone notifier the alert output will be used by some other system to issue an alert or pause the machinery - and so there is no need for an operator to view the video in real time. 
+
+Let's increase the through put of our application by disabling the video frames from being fetched and displayed:
+
+```bash
+cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
+    sudo make build
+    sudo make run CERT_PATH=~/Workshop/IEdgeInsights-v1.5LTS/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=flase
+```
+Now there will no longer by a video output - only the JSON object in the terminal:
+
+```json
+{"Measurement":"stream1_results","Channels":3.0,"Height":1080.0,"ImgHandle":"persist_2687d37d","Width":1920.0,"cam_sn":"camera-serial-number","defects":"[]","display_info":"[{\"info\":\"Inferencetime:24.679ms\",\"priority\":0},{\"info\":\"Throughput:40.521fps\",\"priority\":0},{\"info\":\"WorkerSafe:True\",\"priority\":0}]","encoding":"jpg","idx":65649.0,"image_id":"18a6d4bd-d446-4b88-8edc-983eab4d99ef","machine_id":"tool_2","part_id":"376101d0-268d-4c30-98a4-78725fe8847d","timestamp":1567197537.8904457,"influx_ts":1567197537891778821
+```
+
+If you check the "Throughput" it should increase substantially over the pervious run. 
+
+### Offloading Workload 
+
+Another way to increase performance and free up CPU capacity is by running the same code on various Intel's Accelerators such as GPUs and Intel® Myriad™-VPUs.
 
 The Restricted zone notifier application can be run on different hardwares by customizing the configuration JSON file (restricted_zone_notifier.json).
 
