@@ -202,4 +202,4 @@ You should now understand the Intel® Edge Insights Software framework component
 Let's Deploy a Restricted Zone Notifier Reference implementation using Intel® Edge Insights Software framework in our next lab.
 
 ## Next Lab
-[Understanding of Converting Python based RI to classifier and trigger based IEI Software](./understanding_RI_to_EIS_conversion.md)
+[Understanding of Converting Python based RI to classifier and trigger based IEI Software](./understanding_ri_to_eis_conversion.md)

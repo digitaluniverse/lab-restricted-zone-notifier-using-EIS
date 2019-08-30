@@ -11,7 +11,7 @@ First part of Lab is to explore about the Intel® Edge Insights(IEI) Software an
     - Lab - [Explore Intel® Edge Insights Software](./explore_IEdgeInsights.md)
 
 * **Understanding of Converting Python based RI to classifier and trigger based IEI Software**
-    - Lab - [Understanding of Converting Python based RI to classifier and trigger based IEI Software ](./understanding_RI_to_EIS_conversion.md)
+    - Lab - [Understanding of Converting Python based RI to classifier and trigger based IEI Software ](./understanding_ri_to_eis_conversion.md)
 
 * **Deploy Restricted Zone Notifier using IEI Software**
     - Lab - [Deploy Restricted Zone Notifier using IEI Software](./lab_restricted_zone_notifier.md)
