@@ -168,7 +168,7 @@ Input to the application can be from a live stream or from a video file. Here vi
 To **build and run** the sample pcbdemo sample application execute the following commands.
 
 ```bash
-cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer/
+cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/
 sudo make build run
 ```
 
