@@ -44,7 +44,7 @@ Trigger Setup:
         }
 ```
 
-Here we see the trigger set as "pcb_trigger" - this specifices that we will use ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/pcb_trigger.py as the trigger script for our application. The script that creates the trigger is ~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion/VideoIngestion.py 
+Here we see the trigger set as "pcb_trigger" - this specifices that we will use ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/pcb_trigger.py as the trigger script for our application. The script that calls the trigger is ~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion/VideoIngestion.py 
 
 
 Classifier Setup:
