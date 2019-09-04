@@ -424,7 +424,7 @@ This will take the inputs from [docker_setup/config/provision_config.json](docke
 - Run the following commands
 
     ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS
+    cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup
     sudo make provision CERT_PATH=../cert-tool/Certificates/
     sudo make install CERT_PATH=../cert-tool/Certificates/
     ```
