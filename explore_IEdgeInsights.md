@@ -72,7 +72,7 @@ This block defines the classification module where we specify the classifer name
 
 Note: This folder must be in this location and have the same name as the classifier to function. 
 
-This block also sets the reference image and regioin of interest files as well as the intermediate representation model files for our inference model. 
+This block also sets the reference image and region of interest files as well as the intermediate representation model files for our inference model. 
 
 **Video Ingestion**   
 The Video Ingestion module in the EIS is a user defined function, which uses the Data Ingestion library to ingest data to InfluxDB and Image store
