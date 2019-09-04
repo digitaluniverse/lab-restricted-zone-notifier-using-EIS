@@ -350,7 +350,7 @@ To integrate the developed restricted zone notifier demo, following files to be 
 - To complete this, run the following commands in the terminal
 
     ```bash
-    cd  ~/IEdgeinsights/VideoIngestion
+    cd  ~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion
     sudo gedit VideoIngestion.py
     ```
 - Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
@@ -400,7 +400,8 @@ The ia_data_analytics docker container which runs the classification using openV
 
 ```bash
 cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config
-mkdir restricted_zone_notifier && cd mkdir restricted_zone_notifier
+mkdir restricted_zone_notifier
+cd restricted_zone_notifier
 wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013-fp16.bin
 wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013-fp16.xml
 wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013.bin
