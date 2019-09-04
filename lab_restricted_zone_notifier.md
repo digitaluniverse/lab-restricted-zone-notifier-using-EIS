@@ -82,7 +82,7 @@ The purpose of classifier algorithm is to load the frame from the trigger into t
 - Enter the following commands in terminal to complete this.
 
   ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/algo/dpm/classification/classifier/
+    cd ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/
     mkdir restrictedzonenotifier && cd restrictedzonenotifier
     sudo gedit __init__.py
     ```
