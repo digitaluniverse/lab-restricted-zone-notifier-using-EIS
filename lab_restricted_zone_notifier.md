@@ -498,7 +498,7 @@ Execute the following commands:
 Now re run the application:
 
 ```bash
-    cd ~/IEdgeinsights/docker_setup/
+    cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup
     sudo make provision CERT_PATH=../cert-tool/Certificates/
     sudo make install CERT_PATH=../cert-tool/Certificates/
 ```
