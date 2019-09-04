@@ -340,7 +340,7 @@ To integrate the developed restricted zone notifier demo, following files to be 
 - To complete this, run the following commands in the terminal
 
     ```bash
-    cd  ~/IEdgeinsights/docker_setup
+    cd  ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup
     sudo gedit .env
     ```
 - Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
