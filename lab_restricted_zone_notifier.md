@@ -379,13 +379,13 @@ To customize the visualizer application(visualizer.py) modify the **config .json
     ```
 and replace the contents of the config.json with the below configuration details to view the result in a single window
 
-    ```JSON
+ ```
     {
       "output_streams": [
         "stream1_results"
       ]
     }
-    ```
+ ```
 
 ### Step-5 : Download video 
 We will be using a test video from the Intel IoT DevKit repository. It shows workers entering a simulated restricted zone and will be used to test the EIS pipeline.
