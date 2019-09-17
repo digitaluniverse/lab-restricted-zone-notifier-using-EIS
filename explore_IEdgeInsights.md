@@ -1,17 +1,19 @@
 ## Explore Intel® Edge Insights Software
 ### What is Intel® Edge Insights Software
-Industrial Edge Insights Software (EIS) from Intel is a scalable solution for the industrial sector addressing various manufacturing uses which include data collection, storage, and analytics on a variety of hardware nodes that span across the factory floor.
-### How Industrial Edge Insights Software Works
-To understand how it works, let's first understand key components of this software stack.
+Industrial Edge Insights Software (EIS) from Intel is a reference implementation of an analytics pipeline. The pipeline is designed as a set of micro-services that can be deployed to monitor time series and video data.
 
-**Configuration File (factory_pcbdemo.json)**   
+Edge Insights Software (EIS) implements the data ingestion, storage, alerting and monitoring and all the infrustructure software to support analytics applications. This leaves you, as the developer or systems integrator to focus on creating the algorithms that monitor the data. 
+
+### Industrial Edge Insights Software Architecture
+
+#### Configuration File (factory_pcbdemo.json)   
 This JSON file is the main configuration file for the entire data pipeline. Using this file, a user can define the data ingestion, storage, triggers, and classifiers to be used in the application.
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config/factory_pcbdemo.json
 
 Take a look at the file now and notice some key elements: 
 
-Video Ingestion:
+##### Video Ingestion
 
 ```json
 "data_ingestion_manager": {
@@ -32,7 +34,7 @@ Video Ingestion:
 
 Here we see the video file set as "./test_videos/pcb_d2000.avi" this path is relative to ~/Workshop/IEdgeInsights-V1.5LTS/docker_setup
 
-Trigger Setup:
+##### Trigger Setup
 
 ```json
     "triggers": {
@@ -68,36 +70,38 @@ Classifier Setup:
     }
 ```
 
-This block defines the classification module where we specify the classifer name "pcbdemo" - This will be used by ~/Workshop/IEdgeInsights-V1.5LTS/algos/dpm/classification/classifier_manager.py to set the connection between the Trigger module and Classification module by using the ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/pcbdemo folder as the location of the classification scripts.
+This block defines the classification module where we specify the classifer name **pcbdemo** - This will be used by ~/Workshop/IEdgeInsights-V1.5LTS/algos/dpm/classification/classifier_manager.py to set the connection between the Trigger module and Classification module by using the ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/pcbdemo folder as the location of the classification scripts.
 
 Note: This folder must be in this location and have the same name as the classifier to function. 
 
 This block also sets the reference image and region of interest files as well as the intermediate representation model files for our inference model. 
 
-**Video Ingestion**   
-The Video Ingestion module in the EIS is a user defined function, which uses the Data Ingestion library to ingest data to InfluxDB and Image store
+##### Video Ingestion
+The Video Ingestion module is a user defined function, which uses the Data Ingestion library to import data into the database and store video frames the object store
 
 ![](images/VideoIngestion.png)
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion/
 
-**Trigger**   
+##### Trigger
 This filters the incoming data stream, mainly to reduce the storage and computation requirements by only passing on frames of interest. All input frames are passed to the Trigger.  When it detects a frame of interest based on user defined functions, it activates a signal which causes that frame to be saved in the Image Store database, and the metadata for that frame in the InfluxDB database.
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/
 
-**Classifier**   
+##### Classifier
 The is a user defined algorithm that is run on each frame of interest. Kapacitor, an open source data processing engine, subscribes to the meta-data stream , and the classifier receives the meta-data from Kapacitor. The classifier pulls the frame from the Image Store, and saves the analysis results as metadata back into the InfluxDB database.
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/
 
-**visualizer**   
-      This is to view resulting output
+##### Visualizer
+      The visualizer is not a video viewer! It is pulling frames that have a classification result from the object store and displaying them rapidly one after another.
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer/
 
 
-***By now we understood the components, Let's understand how data flows between these components.***
+### Data Flow in Edge Insights Software
+
+We have reviewed the architectural components of EIS. Now let's understand how data flows between these components.
 
 ![](images/eis-overview.png)
 
