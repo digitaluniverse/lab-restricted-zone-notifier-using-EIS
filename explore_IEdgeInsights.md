@@ -131,10 +131,42 @@ The Video Ingestion module uses the Data Ingestion library to setup multiple vid
 
 ![](images/VideoIngestion.png)
 
+
+The Video Ingestion micro-service can setup multiple video streams. These streams may be gstreamer RTSP streams, video cameras, or video files.
+
+For example the **$EIS_HOME/docker_setup/config/algo_config/factory_multi_cam.json** configuration file outlines how to load multiple RTSP camera streams:
+
+```
+ "data_ingestion_manager": {
+        "ingestors": {
+            "video": {
+                "vi_queue_size":5,
+                "streams": {
+                    "capture_streams": {
+                        "cam_serial1": {
+                            "video_src": "rtspsrc location=\"rtsp://localhost:8554/\" latency=100 ! rtph264depay ! h264parse ! mfxdecode ! videoconvert ! appsink",
+                            "encoding": {
+                                "type": "jpg",
+                                "level": 100
+                            },
+                            "img_store_type": "inmemory_persistent",
+                            "poll_interval": 0.2
+                        },
+                        "cam_serial2": {
+                            "video_src": "rtspsrc location=\"rtsp://localhost:8554/\" latency=100 ! rtph264depay ! h264parse ! mfxdecode ! videoconvert ! appsink",
+                            "encoding": {
+                                "type": "jpg",
+                                "level": 100
+                            },
+                            "img_store_type": "inmemory_persistent",
+                            "poll_interval": 0.2
+                        },
+```
+
 *Location:*$EIS_HOME/VideoIngestion/
 
 ### Trigger
-This filters the incoming data stream, mainly to reduce the storage and computation requirements by only passing on frames of interest. All input frames are passed to the Trigger.  When it detects a frame of interest based on user defined functions, it activates a signal which causes that frame to be saved in the Image Store database, and the metadata for that frame in the InfluxDB database.
+This filters the incoming data stream, mainly to reduce the storage and computation requirements by only passing frames of interest. All input frames are passed to the Trigger.  When it detects a frame of interest based on user defined functions, it activates a signal which causes that frame to be saved in the Image Store database, and the metadata for that frame in the InfluxDB database.
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/
 
