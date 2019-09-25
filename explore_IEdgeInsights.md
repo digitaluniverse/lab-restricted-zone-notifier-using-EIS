@@ -1,19 +1,62 @@
-## Explore Intel® Edge Insights Software
-### What is Intel® Edge Insights Software
-Industrial Edge Insights Software (EIS) from Intel is a reference implementation of an analytics pipeline. The pipeline is designed as a set of micro-services that can be deployed to monitor time series and video data.
+# Explore Intel® Edge Insights Software
+## What is Intel® Edge Insights Software
+Industrial Edge Insights Software (EIS) from Intel is a reference implementation of an analytics pipeline. The pipeline is designed as a set of micro-services that the customer can deploy in different configurations.
 
-Edge Insights Software (EIS) implements the data ingestion, storage, alerting and monitoring and all the infrustructure software to support analytics applications. This leaves you, as the developer or systems integrator to focus on creating the algorithms that monitor the data. 
+Edge Insights Software (EIS) implements the data ingestion, storage, alerting and monitoring and all the infrustructure software to support analytics applications. This leaves you, as the developer or systems integrator to focus on creating the application and not the infrastructure.  
 
-### Industrial Edge Insights Software Architecture
+In this lab, we will walk through the key files that the application developer will need to modify.
 
-#### Configuration File (factory_pcbdemo.json)   
+## Configuration Overview
+
+### The Build Configuration File
+
+**$EIS_HOME/docker_setup/.env** contains all of the environmental variables for the micro-service build process. This includes Shell variables and Docker environmental variables.
+
+Lines 30-41 Contain several important configuration parameters, include:
+
+* **IEI_SERVICES** - the configuration file that defines the micro-services to be built. This file is located in the **$EIS_HOME/docker_setup/config/** directory.
+
+```
+ 30 # IEI_SERVICES allows to selectively build and run the required IEI containers per point data/video usecase
+ 31 IEI_SERVICES=services_all.json
+ 32 
+ 33 # CONFIG_FILE has all the required information for video usecase like source of video stream, triggger and
+ 34 # classification algos configuration
+ 35 CONFIG_FILE=factory_pcbdemo.json
+ 36 
+ 37 # This is the path where IEI package is installed
+ 38 IEI_INSTALL_PATH=/opt/intel/iei
+ 39 
+ 40 # DEV_MODE if set `true` allows one to run IEI in non-secure mode and provides additional UX/DX etc.,
+ 41 DEV_MODE=true
+```
+
+The ports that each micro-service uses are defined in lines
+
+```
+ 46 # Configurable ports
+ 47 GRPC_EXTERNAL_PORT=50051
+ 48 GRPC_INTERNAL_PORT=50052
+ 49 OPCUA_PORT=4840
+ 50 INFLUXDB_PORT=8086
+ 51 IMAGESTORE_PORT=50055
+ 52 KAPACITOR_PORT=9092
+ 53 VAULT_PORT=8200
+ 54 
+ 55 # Non-configurable ports
+ 56 REDIS_PORT=6379
+ 57 MINIO_PORT=9000
+```
+
+
+### Application Configuration File   
 This JSON file is the main configuration file for the entire data pipeline. Using this file, a user can define the data ingestion, storage, triggers, and classifiers to be used in the application.
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config/factory_pcbdemo.json
 
 Take a look at the file now and notice some key elements: 
 
-##### Video Ingestion
+### Video Ingestion
 
 ```json
 "data_ingestion_manager": {
