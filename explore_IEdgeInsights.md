@@ -81,7 +81,7 @@ Take a look at the file now and notice some key elements:
 
 Here we see the video file set as "./test_videos/pcb_d2000.avi" this path is relative to **$EIS_HOME/docker_setup/**
 
-##### Trigger Setup
+### Trigger Setup
 
 ```json
     "triggers": {
@@ -124,16 +124,16 @@ This block defines the classification module where we specify the classifer name
 The **config** section defines all of the arguments that are passed to the classifier. This particular classifier will use OpenVINO :wine_glass:. OpenVINO requires a **neural network model file** in itermediate representation format and the **device hardware** that the inference will be run on.
 
 
-This block also sets the **ref_img** reference image and **ref_config_roi** region of interest configuration files. 
+This block also sets the **ref_img** reference image and **ref_config_roi** region of interest configuration files. These files are used in the Mobilenet defect detection algorithm. 
 
-##### Video Ingestion
-The Video Ingestion module is a user defined function, which uses the Data Ingestion library to import data into the database and store video frames the object store
+### Video Ingestion
+The Video Ingestion module uses the Data Ingestion library to setup multiple video feeds and pass the frames to the data preprocessing micro-service. 
 
 ![](images/VideoIngestion.png)
 
-*Location:*~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion/
+*Location:*$EIS_HOME/VideoIngestion/
 
-##### Trigger
+### Trigger
 This filters the incoming data stream, mainly to reduce the storage and computation requirements by only passing on frames of interest. All input frames are passed to the Trigger.  When it detects a frame of interest based on user defined functions, it activates a signal which causes that frame to be saved in the Image Store database, and the metadata for that frame in the InfluxDB database.
 
 *Location:*~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/
