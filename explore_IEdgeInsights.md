@@ -15,6 +15,9 @@ In this lab, we will walk through the key files that the application developer w
 Lines 30-41 Contain several important configuration parameters, include:
 
 * **IEI_SERVICES** - the configuration file that defines the micro-services to be built. This file is located in the **$EIS_HOME/docker_setup/config/** directory.
+* **CONFIG_FILE** - the configuration file that defines the data input, pre-processing, and classification. This file is located in the **$EIS_HOME/docker_setup/config/algo_config** directory. 
+* **IEI_INSTALL_PATH** - Defines where IEI is installed. 
+* **DEV_MODE** - Sets developer mode which disables SSL certificate authentication between micro-services. 
 
 ```
  30 # IEI_SERVICES allows to selectively build and run the required IEI containers per point data/video usecase
@@ -31,7 +34,7 @@ Lines 30-41 Contain several important configuration parameters, include:
  41 DEV_MODE=true
 ```
 
-The ports that each micro-service uses are defined in lines
+The ports that each micro-service uses are defined in lines:
 
 ```
  46 # Configurable ports
@@ -49,10 +52,11 @@ The ports that each micro-service uses are defined in lines
 ```
 
 
-### Application Configuration File   
+### Application Configuration File
+
 This JSON file is the main configuration file for the entire data pipeline. Using this file, a user can define the data ingestion, storage, triggers, and classifiers to be used in the application.
 
-*Location:*~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config/factory_pcbdemo.json
+This file is located in **$EIS_HOME/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config/factory_pcbdemo.json**
 
 Take a look at the file now and notice some key elements: 
 
@@ -75,7 +79,7 @@ Take a look at the file now and notice some key elements:
     }
 ```
 
-Here we see the video file set as "./test_videos/pcb_d2000.avi" this path is relative to ~/Workshop/IEdgeInsights-V1.5LTS/docker_setup
+Here we see the video file set as "./test_videos/pcb_d2000.avi" this path is relative to **$EIS_HOME/docker_setup/**
 
 ##### Trigger Setup
 
@@ -89,7 +93,7 @@ Here we see the video file set as "./test_videos/pcb_d2000.avi" this path is rel
         }
 ```
 
-Here we see the trigger set as "pcb_trigger" - this specifices that we will use ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/triggers/pcb_trigger.py as the trigger script for our application. The script that calls the trigger is ~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion/VideoIngestion.py 
+Here we see the trigger set as **pcb_trigger** - this specifices that we will use **$EIS_HOME/algos/dpm/triggers/pcb_trigger.py** as the trigger script for our application. The script that calls the trigger is **$EIS_HOME/VideoIngestion/VideoIngestion.py**
 
 
 Classifier Setup:
@@ -113,11 +117,14 @@ Classifier Setup:
     }
 ```
 
-This block defines the classification module where we specify the classifer name **pcbdemo** - This will be used by ~/Workshop/IEdgeInsights-V1.5LTS/algos/dpm/classification/classifier_manager.py to set the connection between the Trigger module and Classification module by using the ~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/pcbdemo folder as the location of the classification scripts.
+This block defines the classification module where we specify the classifer name **pcbdemo** - This will be used by **$EIS_HOME/algos/dpm/classification/classifier_manager.py** to set the connection between the Trigger module and Classification module by using the **$EIS_HOME//algos/dpm/classification/classifiers/pcbdemo** folder as the location of the classification scripts.
 
-Note: This folder must be in this location and have the same name as the classifier to function. 
+:warning: This folder must be in this location and have the same name as the classifier to function. 
 
-This block also sets the reference image and region of interest files as well as the intermediate representation model files for our inference model. 
+The **config** section defines all of the arguments that are passed to the classifier. This particular classifier will use OpenVINO :wine_glass:. OpenVINO requires a **neural network model file** in itermediate representation format and the **device hardware** that the inference will be run on.
+
+
+This block also sets the **ref_img** reference image and **ref_config_roi** region of interest configuration files. 
 
 ##### Video Ingestion
 The Video Ingestion module is a user defined function, which uses the Data Ingestion library to import data into the database and store video frames the object store
