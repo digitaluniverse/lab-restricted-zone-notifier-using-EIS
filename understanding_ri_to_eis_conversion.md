@@ -11,8 +11,6 @@ https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
 
 ## Understanding Restricted Zone Notifier code flow
 
-This sample is intended to demonstrate how to use Inference Engine included in the Intel® Distribution of OpenVINO™ toolkit and the Intel® Deep Learning Deployment Toolkit can be used to improve assembly line safety for human operators and factory workers.
-
 First, let us have a look on the below code flow for the restricted zone notifier application.
 
 ![](images/flowchart.jpg)
