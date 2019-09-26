@@ -152,6 +152,90 @@ In EIS the classifier algorithm has 3 mehthods:
 
 We will use the main python script from the [reference implementation](https://github.com/intel-iot-devkit/restricted-zone-notifier-python/blob/master/application/restricted_zone_notifier.py) as a basis in creating these three methods and add them to out **__init__.py** file.
 
+### Import modules and create Classifier class
+
+First we will import all python modules that will be used in the classifier algorithm and create the main **Classifier** class which will contain our methods:
+
+First open our **__init__.py** file:
+
+```bash
+gedit $EIS_HOME/algos/dpm/classification/classifiers/restrictedzonenotifier/__init__.py
+```
+
+and copy the following code at the top:
+
+```python
+import os
+import sys
+import logging
+import cv2
+import time
+import numpy as np
+import json
+from collections import namedtuple
+from algos.dpm.defect import Defect
+from algos.dpm.display_info import DisplayInfo
+from openvino.inference_engine import IENetwork, IEPlugin
+MyStruct = namedtuple("assemblyinfo", "safe")
+INFO = MyStruct(True)
+PERSON_DETECTED = 1
+class Classifier:
+```
+### Create __init__ method
+
+To create the `__init__` method we will check that the model files exist, load the plugin for CPU, load the CPU extension libraries, and check that the layers of the model are supported.
+
+Paste is the following code into our **__init__.py** file:
+
+```python
+    def __init__(self, model_xml, model_bin, device):
+        """Constructor
+        Parameters
+        ----------
+        model_xml      : TF model xml file
+        model_bin      : TF model bin file
+        device         : Run time device [CPU/GPU/MYRIAD]
+            Classifier configuration
+        """
+
+        self.log = logging.getLogger('PEOPLE_DETECTION')
+
+        # Assert all input parameters exist
+        assert os.path.exists(model_xml), \
+            'Tensorflow model missing: {}'.format(model_xml)
+        assert os.path.exists(model_bin), \
+            'Tensorflow model bin file missing: {}'.format(model_bin)
+
+        # Load OpenVINO model
+        #loading plugin for CPU
+        self.plugin = IEPlugin(device=device.upper(), plugin_dirs="")
+
+        if 'CPU' in device:
+            self.plugin.add_cpu_extension("/opt/intel/openvino/inference_engine/lib/intel64/libcpu_extension_sse4.so")
+
+        self.net = IENetwork(model=model_xml, weights=model_bin)
+
+        if device.upper() == "CPU":
+            supported_layers = self.plugin.get_supported_layers(self.net)
+            not_supported_layers = [l for l in self.net.layers.keys() if l not
+                                    in supported_layers]
+            if len(not_supported_layers) != 0:
+                self.log.debug('ERROR: Following layers are not supported by \
+                                the plugin for specified device {}:\n \
+                                {}'.format(self.plugin.device,
+                                           ', '.join(not_supported_layers)))
+
+        assert len(self.net.inputs.keys()) == 1, \
+            'Sample supports only single input topologies'
+        assert len(self.net.outputs) == 1, \
+            'Sample supports only single output topologies'
+
+        self.input_blob = next(iter(self.net.inputs))
+        self.output_blob = next(iter(self.net.outputs))
+        self.net.batch_size = 1  # change to enable batch loading
+        self.exec_net = self.plugin.load(network=self.net)
+   ```
+
 
 ### Create Classify method 
 
