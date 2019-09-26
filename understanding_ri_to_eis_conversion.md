@@ -139,25 +139,23 @@ wget https://raw.githubusercontent.com/SSG-DRD-IOT/lab-restricted-zone-notifier-
 
 ```
 
+### Creating the Classifier algorithm 
+
+In EIS the classifier algorithm has 3 mehthods: 
 
 
-
-### Create Classifier method for __init__.py
-
-In the EIS framework, a **Classifier** module is provided where the plugin initialization and inference can be done.
-
-The Classifier module has two methods: `__init__`, `ssd_out`, and `classify`.
-
-`__init__` : This method is used for initialization and loading the intermediate representation model into the plugin. 
+`__init__` : The method used for initialization and loading the intermediate representation model into the plugin. 
  
-`classify` : This method is used for inferencing and capturing the inference output.
+`classify` : The method used for inferencing and capturing the inference output.
  
-`ssd_out`: This method is parsing the classification output.  
+`ssd_out`: The method used fpr parsing the classification output. 
+
+We will use the main python script from the [reference implementation](https://github.com/intel-iot-devkit/restricted-zone-notifier-python/blob/master/application/restricted_zone_notifier.py) as a basis in creating these three methods and add them to out **__init__.py** file.
 
 
-We will edit the **__init__**.py file we created easrlier to add these methods. 
+### Create Classify method 
 
-To create the `classifcy` method we will use the section of the main function loop that runs the single shot detector on each frame as as well as the section of code that writes the alerts out to the screen as a basis: 
+To create the `classify` method we will use the section of the main function loop that runs the single shot detector on each frame as as well as the section of code that writes the alerts out to the screen as a basis: 
 
 ```python
  def classify(self, frame_num, img, user_data):
