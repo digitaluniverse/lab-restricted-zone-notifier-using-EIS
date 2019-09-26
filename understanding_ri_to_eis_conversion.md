@@ -34,6 +34,8 @@ First, let us have a look on the below code flow for the restricted zone notifie
 
 For our convenience, let's set an environmental variable called **EIS_HOME** to refer to the root level directory of the Edge Insights Software.
 
+**During the workshop be sure to check this location or ask your instructor. **
+
 ```bash
 export EIS_HOME=/home/eis/IEdgeInsights-lab-restricted-zone-notifier
 ```
