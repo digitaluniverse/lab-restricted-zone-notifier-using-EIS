@@ -140,27 +140,100 @@ wget https://raw.githubusercontent.com/SSG-DRD-IOT/lab-restricted-zone-notifier-
 ```
 
 
-### 1. Provide input to run the application
 
-In Python based reference implementation the model to use in classification, plugin libraries, the hardware to run the code on, and the source video are set on the command line at launch. In the EIS framework, a JSON file is created that has all of these parameters set. The JSON file is available in the **IEdgeInsights/docker_setup/config/algo_config** directory.
-![](images/rzn_input_1.png)
-![](images/arrow.png)
-![](images/rzn_input_2.png)
 
-### 2. Initialization and loading IR to the plugin for target device
+### Create Classifier method for __init__.py
 
 In the EIS framework, a **Classifier** module is provided where the plugin initialization and inference can be done.
 
-The Classifier module has two methods: `__init__` and `classify`.
+The Classifier module has two methods: `__init__`, `ssd_out`, and `classify`.
 
-`__init__` : This method is used for initialization and loading the intermediate representation model to the plugin for the target device.  
- `classify` : This method is used for inferencing and capturing the inference output.
+`__init__` : This method is used for initialization and loading the intermediate representation model into the plugin. 
+ 
+`classify` : This method is used for inferencing and capturing the inference output.
+ 
+`ssd_out`: This method is parsing the classification output.  
 
-To create the **init**.py module the initialization parameters from the main() function of our pytthon script are ported over.
 
-![](images/rzn_initialization_1.png)
-![](images/arrow.png)
-![](images/rzn_initialization_2.png)
+We will edit the **__init__**.py file we created easrlier to add these methods. 
+
+To create the `classifcy` method we will use the section of the main function loop that runs the single shot detector on each frame as as well as the section of code that writes the alerts out to the screen as a basis: 
+
+```python
+ def classify(self, frame_num, img, user_data):
+        """Classify the given image.
+
+        Parameters
+        ----------
+        frame_num : int
+            Frame count since the start signal was received from the trigger
+        img : NumPy Array
+            Image to classify
+        user_data : Object
+            Extra data passed forward from the trigger
+
+        Returns
+        -------
+            Returns dissplay info and detected coordinates
+        """
+        self.log.info('Classify')
+        d_info = []
+        p_detect = []
+        frame_count=+1
+
+        initial_wh = [img.shape[1], img.shape[0]]
+        n,c,h,w =  self.net.inputs[self.input_blob].shape
+
+        roi_x,roi_y, roi_w,roi_h = [0,0,0,0]
+
+        if roi_x <= 0 or roi_y <= 0:
+           roi_x = 0
+           roi_y = 0
+        if roi_w <= 0:
+            roi_w = img.shape[1]
+        if roi_h <= 0:
+             roi_h = img.shape[0]
+
+        cv2.rectangle(img, (roi_x, roi_y),
+                      (roi_x + roi_w, roi_y + roi_h), (0, 0, 255), 2)
+        selected_region = [roi_x, roi_y, roi_w, roi_h]
+
+        in_frame_fd = cv2.resize(img, (w, h))
+        # Change data layout from HWC to CHW
+        in_frame_fd = in_frame_fd.transpose((2, 0, 1))
+        in_frame_fd = in_frame_fd.reshape((n, c, h, w))
+
+        # Start asynchronous inference for specified request.
+        inf_start = time.time()
+        self.exec_net.start_async(request_id=0, inputs={self.input_blob:in_frame_fd})
+        self.infer_status=self.exec_net.requests[0].wait()
+        det_time = time.time() - inf_start
+
+        res = self.exec_net.requests[0].outputs[self.output_blob]
+        # Parse SSD output
+        safe,person=self.ssd_out(res, initial_wh, selected_region)
+
+        if person:
+            x,y,x1,y1 = [person[0][i] for i in (0,1,2,3)]
+            p_detect.append(Defect(PERSON_DETECTED, (x, y), (x1, y1)))
+
+        # Draw performance stats
+        inf_time_message = "Inference time: {:.3f} ms".format(det_time * 1000)
+        throughput = "Throughput: {:.3f} fps".format(1000*frame_count/(det_time*1000))
+
+        d_info.append(DisplayInfo(inf_time_message, 0))
+        d_info.append(DisplayInfo(throughput, 0))
+        #if not safe display HIGH [priority: 2] alert string
+        if p_detect:
+            warning = "HUMAN IN ASSEMBLY AREA: PAUSE THE MACHINE!"
+            d_info.append(DisplayInfo('Worker Safe: False', 2))
+            d_info.append(DisplayInfo(warning, 2))
+        else:
+            d_info.append(DisplayInfo('Worker Safe: True', 0))
+
+        return d_info, p_detect
+ ```
+
 
 ### 3. Capture frames from input file
 
