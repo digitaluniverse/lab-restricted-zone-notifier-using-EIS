@@ -118,27 +118,6 @@ Next copy and paste this text into the newly created file:
 }
 ```
 
-### Download Required Video files and Inference Models
-
-Notice that the **data_ingestion_manager** has one ingestor defined and it is a video file located at **"./test_videos/worker-zone-detection.mp4"**
-
-You will need to download this file and place it in the following directory:
-```
-cd $EIS_HOME/docker_setup/test_videos
-wget https://raw.githubusercontent.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/master/videos/worker-zone-detection.mp4
-```
-
-You will also need to download the OpenVINO inference models and label files **person-detection-retail-0013.xml** and **person-detection-retail-0013.bin**
-
-```bash
-mkdir $EIS_HOME/docker_setup/config/algo_config/restricted_zone_notifier
-cd    $EIS_HOME/docker_setup/config/algo_config/restricted_zone_notifier
-
-wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/blob/master/Models/person-detection-retail-0013.bin
-wget https://raw.githubusercontent.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/master/Models/person-detection-retail-0013.xml
-
-```
-
 ### Creating the Classifier algorithm 
 
 In EIS the classifier algorithm has 3 mehthods: 
