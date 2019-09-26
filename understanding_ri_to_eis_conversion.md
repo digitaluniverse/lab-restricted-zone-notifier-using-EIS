@@ -1,7 +1,13 @@
-# How to Convert a Python based RI to Classifier and Trigger based Intel® Edge Insights (EIS) Software
-This lab shows the steps that an application developer will need to implement to create a video analytics solution on the Edge Insights Software platform.
+# Implementing an Classifier and Preprocessing Trigger based Intel® Edge Insights (EIS) Software
+This lab shows the steps that an application developer will need to implement to create a video analytics solution on the Edge Insights Software framework.
 
-We will implement the **Restricted Zone Notifier** reference implementation which can be found on software.intel.com: https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
+## Reference Implementations on the Intel Development Zone
+The Intel Developer Zones has many reference implementation applications, sample code snippets and whitepapers to help you start building with Intel technology.
+
+On the [Industrial Reference Implementations and Code Samples](https://software.intel.com/en-us/industrial) page, you can browser difference ready-made applications. We will be porting the [Restricted Zone Notifier](https://software.intel.com/en-us/iot/reference-implementations/restricted-zone-notifier) to the Edge Insights Software framework.
+
+The source code for the Restricted Zone Notifier can be found on Github. 
+https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
 
 ## Understanding Restricted Zone Notifier code flow
 
