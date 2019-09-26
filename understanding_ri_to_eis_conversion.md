@@ -1,8 +1,10 @@
-# How to Convert a python based RI to Classifier and Trigger based Intel® Edge Insights (EIS) Software
+# How to Convert a Python based RI to Classifier and Trigger based Intel® Edge Insights (EIS) Software
+This lab shows the steps that an application developer will need to implement to create a video analytics solution on the Edge Insights Software platform.
 
-In this lab, We will understand how to port an application developed in python and run as single script to the classifier and trigger based Intel® Edge Insights (EIS) Software framework. We will start with the **Restricted Zone Notifier** reference implementation which can be found here: https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
+We will implement the **Restricted Zone Notifier** reference implementation which can be found on software.intel.com: https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
 
 ## Understanding Restricted Zone Notifier code flow
+
 This sample is intended to demonstrate how to use Inference Engine included in the Intel® Distribution of OpenVINO™ toolkit and the Intel® Deep Learning Deployment Toolkit can be used to improve assembly line safety for human operators and factory workers.
 
 First, let us have a look on the below code flow for the restricted zone notifier application.
