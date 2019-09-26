@@ -6,6 +6,7 @@ In our previous Lab, we have successfully created a new application using the In
 
 - Integrate the application configuration into EIS
 - Customize visualizer application in order to view the resulting output.
+- Download the model and video files.
 - Setup OPC/UA server to receive warning messages form the classifier.
 - Run the application using different Intel's Accelerators(CPU/GPU/MYRIAD).
 
@@ -71,7 +72,7 @@ and replace the contents of the config.json with the below configuration details
     }
  ```
 
-### Step-5 : Download video 
+### Download video 
 We will be using a test video from the Intel IoT DevKit repository. It shows workers entering a simulated restricted zone and will be used to test the EIS pipeline.
 
 ```bash
@@ -79,7 +80,7 @@ cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/test_videos
 wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-detection.mp4
 ```
 
-### Step-6: Download Model 
+### Download Model 
 The ia_data_analytics docker container which runs the classification using openVINO requires a specific person detection model to detect when workers enter the restricted zone. Usually you would use the OpenVINO model downloader to get the models but we will just pull them from the workshop Github repo.  The model files need to be copied into the docker setup path so that the ia_data_analytics container can locate it:
 
 ```bash
@@ -92,9 +93,6 @@ wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/m
 wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013.xml
 ```
 
-### Step-7 : Build and Run the Application
-Run the following commands to build and run the customized restricted zone notifier apllication using EIS.
-
 #### Generate certificates:
 - Run the following commands
 
@@ -103,8 +101,9 @@ Run the following commands to build and run the customized restricted zone notif
     python3 main.py
     ```
 
-#### Provision the secrets to Vault:
-This will take the inputs from [docker_setup/config/provision_config.json](docker_setup/config/provision_config.json) & read the cert-tool generated Certificates and save it securely by storing it in the Hashicorp Vault.
+### Build and Run the Application
+We are now ready to build and run out application with the certificates that were generated.
+
 - Run the following commands
 
     ```bash
@@ -142,7 +141,7 @@ This will take the inputs from [docker_setup/config/provision_config.json](docke
 
 Here we can see the alert status and performance of the application. 
 
-## Step-8 : Optimizing Application
+## Optimizing Application
 Now, we will explore ways of improving performance of the application.
 
 ## Visualizer 
