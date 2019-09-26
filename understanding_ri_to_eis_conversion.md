@@ -13,17 +13,34 @@ https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
 First let's look at the reference implementation of the Restricted Zone Notifier. This is an OpenVino application which determines whether a worker is in an unsafe or restricted zone. The classification results are sent to an MQTT broker and published for third-party applications. 
 
 ## Steps to Port Application to EIS
-1. Create the restricted Zone Notifier Application Configuration JSON file
-2. What is a directory called restricted Zone Notifier in The classifier directory 
+1. Create the Restricted Zone Notifier Application Configuration JSON file
+2. What is a directory called restricted Zone Notifier in the classifier directory 
 3. Create a Python file for the user defined classifier algorithm 
+4. Deploy application
 
 
-
+### 
 First, let us have a look on the below code flow for the restricted zone notifier application.
 
 ![](images/flowchart.jpg)
 
 **Now**, Lets understand how we can convert this python based RI to EIS framework step by step.
+
+### Setup Environmental Variables
+For our convenience, let's set an environmental variable called **EIS_HOME** to refer to the root level directory of the Edge Insights Software.
+
+```bash
+export EIS_HOME=/home/eis/IEdgeInsights-lab-restricted-zone-notifier
+```
+
+
+### Create Directories for the New EIS Application
+First, let's create the directory for the new user-defined classification function and create an empty **__init__.py** file to contain our implementation.
+
+```bash
+mkdir $EIS_HOME/algos/dpm/classification/classifiers/restrictedzonenotifier
+touch $EIS_HOME/algos/dpm/classification/classifiers/restrictedzonenotifier/__init__.py
+```
 
 ### 1. Provide input to run the application
 
@@ -31,6 +48,7 @@ In Python based reference implementation the model to use in classification, plu
 ![](images/rzn_input_1.png)
 ![](images/arrow.png)
 ![](images/rzn_input_2.png)
+
 
 
 ### 2. Initialization and loading IR to the plugin for target device
