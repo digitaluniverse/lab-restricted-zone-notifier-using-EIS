@@ -47,6 +47,74 @@ mkdir $EIS_HOME/algos/dpm/classification/classifiers/restrictedzonenotifier
 touch $EIS_HOME/algos/dpm/classification/classifiers/restrictedzonenotifier/__init__.py
 ```
 
+### Create the Application Configuration JSON file
+
+In the **$EIS_HOME/docker_setup/config/algo_config** create a file named **restricted_zone_notifier.json**. This file will contain a JSON object that defines the video sources, preprocessing trigger location and the classifier function location.
+
+```bash
+touch $EIS_HOME/docker_setup/config/algo_config/restricted_zone_notifier.json
+```
+
+Next copy and paste this text into the newly created file:
+
+```JSON
+{
+    "machine_id": "tool_2",
+    "trigger_threads": 1,
+    "queue_size" : 10,
+    "data_ingestion_manager": {
+        "ingestors": {
+            "video_file": {
+                "video_file": "./test_videos/worker-zone-detection.mp4",
+                "encoding": {
+                    "type": "jpg",
+                    "level": 100
+                },
+                "img_store_type": "inmemory_persistent",
+                "loop_video": true,
+                "poll_interval": 0.2
+            }
+        }
+    },
+    "triggers": {
+        "restricted_zone_notifier_trigger": {
+            "training_mode": false
+        }
+    },
+    "classification": {
+        "max_workers": 1,
+        "classifiers": {
+            "restrictedzonenotifier": {
+                "trigger": [
+                    "restricted_zone_notifier_trigger"
+                ],
+                "config": {
+                    "model_xml": "./algos/algo_config/restricted_zone_notifier/person-detection-retail-0013.xml",
+                    "model_bin": "./algos/algo_config/restricted_zone_notifier/person-detection-retail-0013.bin",
+                    "device": "CPU"
+                }
+            }
+        }
+    }
+}
+```
+
+### Download Required Video files and Inference Models
+
+Notice that the **data_ingestion_manager** has one ingestor defined and it is a video file located at **"./test_videos/worker-zone-detection.mp4"**
+
+You will need to download this file and place it in the following directory:
+```
+
+```
+
+You will also need to download the OpenVINO inference models and label files **person-detection-retail-0013.xml** and **person-detection-retail-0013.bin**
+
+```bash
+
+```
+
+
 ### 1. Provide input to run the application
 
 In Python based reference implementation the model to use in classification, plugin libraries, the hardware to run the code on, and the source video are set on the command line at launch. In the EIS framework, a JSON file is created that has all of these parameters set. The JSON file is available in the **IEdgeInsights/docker_setup/config/algo_config** directory.
