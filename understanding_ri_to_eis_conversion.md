@@ -239,7 +239,9 @@ Paste is the following code into our **__init__.py** file:
 
 ### Create Classify method 
 
-To create the `classify` method we will use the section of the main function loop that runs the single shot detector on each frame as as well as the section of code that writes the alerts out to the screen as a basis: 
+To create the `classify` method we will use the section of the main function loop that runs the single shot detector on each frame as as well as the section of code that writes the alerts out to the screen as a basis.
+
+Paste is the following code into our **__init__.py** file:
 
 ```python
  def classify(self, frame_num, img, user_data):
@@ -316,39 +318,62 @@ To create the `classify` method we will use the section of the main function loo
         return d_info, p_detect
  ```
 
+### Create ssd_out method
 
-### 3. Capture frames from input file
+The `ssd_out` method is used to parse the classifier output. We will use the `ssd_out` method in the reference python script as the basis.
 
-- In the python based code, the frames are captured from image/video using cv2.Videocapture.
+Paste is the following code into our **__init__.py** file:
 
-* In EIS framework, the fframe capture is done using the **Trigger** module.The trigger module in the EIS stack receives the captured frames from the VideoIngestion module. The purpose of the trigger algorithm is to select frames of interest from the camera stream and pass them to the VideoAnalytics module. The algorithm to use in the trigger modul depends on the use case. For people monitoring you might need a classifier algorithm to execute on all frames whereas a use case like the sample application “pcbdemo” would need the classifier to execute on only the frames where the PCB board is in the center of the frame.
+```python
+    def ssd_out(self,res, initial_wh, selected_region):
+        """
+        Parse SSD output.
 
-* After the video frames are processed by the trigger they are registered by the register_trigger_callback() method to be passed to the classifier.
+        :param res: Detection results
+        :param args: Parsed arguments
+        :param initial_wh: Initial width and height of the frame
+        :param selected_region: Selected region coordinates
+        :return: safe,person  
+        """
+        global INFO
+        person = []
+        INFO = INFO._replace(safe=True)
 
-The section of code in main.py that deals with the video frame input is ported to the resttricted zone notifier trigger script.
+        for obj in res[0][0]:
+            # Draw objects only when probability is more than specified threshold
+            if obj[2] > 0.5:
+                xmin = int(obj[3] * initial_wh[0])
+                ymin = int(obj[4] * initial_wh[1])
+                xmax = int(obj[5] * initial_wh[0])
+                ymax = int(obj[6] * initial_wh[1])
+                person.append([xmin, ymin, xmax, ymax])
 
-![](images/rzn_trigger_1.png)
-![](images/arrow.png)
-![](images/rzn_trigger_2.png)
+        for p in person:
+            # area_of_person gives area of the detected person
+            area_of_person = (p[2] - p[0]) * (p[3] - p[1])
+            x_max = max(p[0], selected_region[0])
+            x_min = min(p[2], selected_region[0] + selected_region[2])
+            y_min = min(p[3], selected_region[1] + selected_region[3])
+            y_max = max(p[1], selected_region[1])
+            point_x = x_min - x_max
+            point_y = y_min - y_max
+            # area_of_intersection gives area of intersection of the
+            # detected person and the selected area
+            area_of_intersection = point_x * point_y
+            if point_x < 0 or point_y < 0:
+                continue
+            else:
+                if area_of_person > area_of_intersection:
+                    # assembly line area flags
+                    INFO = INFO._replace(safe=True)
+                else:
+                    # assembly line area flags
+                    INFO = INFO._replace(safe=False)
+        return INFO.safe,person
+   ```
 
-### 4. Run Classification and parse results
 
-After the trigger selects a frame it is sent to the classifier to run through the model and generate the results needed.
-To set up the classifier we use the code from main.py which defines the Single Shot Detector (SSD) model and port it over to `~/Workshop/IEdgeInsights-v1.5LTS/algos/dpm/classification/classifiers/restrictedzonenotifier/__init__.py`
-
-![](images/rzn_ssd_out_1.png)
-![](images/arrow.png)
-![](images/rzn_ssd_out_2.png)
-
-### 5. Update Status and Alert information
-
-- The status and alert information is also included in the same classifier `__init__.py`. This classify method returns defect information as well as statistics about the inference time and throughput of the data pipeline.
-
-![](images/rzn_output_1.png)
-![](images/arrow.png)
-![](images/rzn_output_2.png)
-
-### 6. Messaging Thread
+### Messaging Thread
 
 The Python based reference implementation messaging thread publishes MQTT messages to Server to display the output.
 
