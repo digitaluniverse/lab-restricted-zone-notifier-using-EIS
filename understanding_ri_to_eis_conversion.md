@@ -53,8 +53,25 @@ touch $EIS_HOME/algos/dpm/classification/classifiers/restrictedzonenotifier/__in
 
 In the **$EIS_HOME/docker_setup/config/algo_config** create a file named **restricted_zone_notifier.json**. This file will contain a JSON object that defines the video sources, preprocessing trigger location and the classifier function location.
 
+
+
+When launching the reference implementation normally parameters such as the model to use, any library plugins, the hardware to run inference on, and the location of the input file are set on the command line:
+
+![](images/rzn_input_1.png)
+
+We will set these configuration parameters in the restricted_zone_notifier.json application configuration file in the **video_file**, **model_xml**, **model_bin**, and **device** fields. 
+
+We will also set the trigger alogorithm and the classification alogrithm to be used in the solution in this configuration file. 
+
+The reference implementation does not have any data pre-processing so we will use the **bypass_trigger** which sends all incoming frames to the classification engine. 
+
+For the classification module we will point to the currently empty **restrictedzonenotifier** folder that we created earlier. 
+
+
+Create the .json file:
+
 ```bash
-touch $EIS_HOME/docker_setup/config/algo_config/restricted_zone_notifier.json
+gedit $EIS_HOME/docker_setup/config/algo_config/restricted_zone_notifier.json
 ```
 
 Next copy and paste this text into the newly created file:
