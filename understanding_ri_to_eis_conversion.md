@@ -9,7 +9,15 @@ On the [Industrial Reference Implementations and Code Samples](https://software.
 The source code for the Restricted Zone Notifier can be found on Github. 
 https://github.com/intel-iot-devkit/restricted-zone-notifier-python.
 
-## Understanding Restricted Zone Notifier code flow
+## Description of the Restricted Zone Notifier that will be Ported to EIS
+First let's look at the reference implementation of the Restricted Zone Notifier. This is an OpenVino application which determines whether a worker is in an unsafe or restricted zone. The classification results are sent to an MQTT broker and published for third-party applications. 
+
+## Steps to Port Application to EIS
+1. Create the restricted Zone Notifier Application Configuration JSON file
+2. What is a directory called restricted Zone Notifier in The classifier directory 
+3. Create a Python file for the user defined classifier algorithm 
+
+
 
 First, let us have a look on the below code flow for the restricted zone notifier application.
 
