@@ -105,7 +105,7 @@ Next copy and paste this text into the newly created file:
         "classifiers": {
             "restrictedzonenotifier": {
                 "trigger": [
-                    "restricted_zone_notifier_trigger"
+                    "bypass_trigger"
                 ],
                 "config": {
                     "model_xml": "./algos/algo_config/restricted_zone_notifier/person-detection-retail-0013.xml",
