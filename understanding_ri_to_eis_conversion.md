@@ -356,9 +356,9 @@ Paste is the following code into our **__init__.py** file:
 
 The Python based reference implementation messaging thread publishes MQTT messages to Server to display the output.
 
-In the EIS framework the messages are published over OPC/UA by the Data Agent Service. We will use an OPC/UA client to view those messages. This OPC/UA client is located in ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer and does not need to be customized for this application.
+In the EIS framework, the messages are published over OPC-UA by the Data Agent Service. We will use an OPC-UA client to view those messages. This OPC/UA client is located in **$EIS_HOME/tools/visualizer** and does not need to be customized for this application.
 
-You should now have a better idea of how an existing code base can be converted to Classifier and Trigger based Intel® Edge Insights (EIS) Software. In the next lab we will implement all of these modules and run the restricted zone notifier using EIS.
+You should now have a better idea of how an existing code base can be converted to Classifier and Trigger based Intel® Edge Insights (EIS) Software. In the next, lab we will implement all of these modules and run the restricted zone notifier using EIS.
 
 ## Next Lab
 
