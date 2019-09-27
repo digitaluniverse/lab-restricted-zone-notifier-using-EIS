@@ -157,7 +157,7 @@ Fetching individual frames from the image store via the Data Agent can slow down
 Let's increase the through put of our application by disabling the video frames from being fetched and displayed:
 
 ```bash
-cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
+cd ~$EIS_HOME/tools/visualizer
 sudo make run CERT_PATH=$EIS_HOME/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=false
 ```
 Now there will no longer by a video output - only the JSON object in the terminal:
@@ -179,7 +179,7 @@ The Restricted zone notifier application can be run on different hardwares by cu
 Execute the following commands:
 
     ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/alog_config/
+    cd $EIS_HOME/docker_setup/config/alog_config/
     sudo gedit restricted_zone_notifier.json
     ```
 - Change the device to GPU ```device=GPU``` inside JSON file
@@ -187,7 +187,7 @@ Execute the following commands:
 Now re run the application:
 
 ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup
+    cd $EIS_HOME/docker_setup
     sudo make provision CERT_PATH=../cert-tool/Certificates/
     sudo make install CERT_PATH=../cert-tool/Certificates/
 ```
@@ -199,7 +199,7 @@ Now re run the application:
 Now launch the visualizer: 
 
 ```bash
-cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
+cd $EIS_HOME/tools/visualizer
     sudo make build
     sudo make run CERT_PATH=~/Workshop/IEdgeInsights-v1.5LTS/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=true
 ```
@@ -212,7 +212,7 @@ The Myriad™ Inference Engine plugin supports VPU devices such as the Intel® N
 
 - VPU devices only support FP16 data type. So we need to use the FP16 variant of our pre-trained person detection model. The pre-trained models are available in the following path.
     ```
-    ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/alog_config/restricted_zone_notifier  
+    $EIS_HOME/docker_setup/config/alog_config/restricted_zone_notifier  
     ```
 - To complete this steps, replace the following lines of code:
 
@@ -221,6 +221,13 @@ The Myriad™ Inference Engine plugin supports VPU devices such as the Intel® N
     "model_bin": "./algos/algo_config/restricted_zone_notifier/person-detection-retail-0013.bin",
     "device": "GPU"
     ```
+Now launch the visualizer: 
+
+```bash
+cd $EIS_HOME/tools/visualizer
+    sudo make run CERT_PATH=~/Workshop/IEdgeInsights-v1.5LTS/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=true
+```
+Note the differences in performance.
 
 - with below lines of codes in **restricted_zone_notifier.json** file.
 
@@ -232,10 +239,17 @@ The Myriad™ Inference Engine plugin supports VPU devices such as the Intel® N
 Now re run the application:
 
 ```bash
-    cd ~/IEdgeinsights/docker_setup/
+    cd $EIS_HOME/docker_setup/
     sudo make provision CERT_PATH=../cert-tool/Certificates/
     sudo make install CERT_PATH=../cert-tool/Certificates/
 ```
+Now launch the visualizer: 
+
+```bash
+cd $EIS_HOME/tools/visualizer
+    sudo make run CERT_PATH=~/Workshop/IEdgeInsights-v1.5LTS/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=true
+```
+Note the differences in performance.
 
 ### Lesson Learnt
 
