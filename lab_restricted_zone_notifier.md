@@ -117,6 +117,12 @@ We are now ready to build and run out application with the certificates that wer
     ```bash
     tail -f /opt/intel/iei/logs/consolidatedLogs/iei.log
     ```
+If all the containers built and ran correctly you will see:
+
+```
+ia_data_agent         | I0927 12:43:00.189728       7 StreamManager.go:191] Publishing topic: stream1_results
+ia_video_analytics    | 2019-09-27 12:43:00,374 : INFO : PEOPLE_DETECTION : [__init__.py] :classify : in line : [160] : Classify
+```
 
 
 #### IEI visualizer setup
