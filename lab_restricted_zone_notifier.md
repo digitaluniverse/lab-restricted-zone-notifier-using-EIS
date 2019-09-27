@@ -158,8 +158,7 @@ Let's increase the through put of our application by disabling the video frames 
 
 ```bash
 cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
-    sudo make build
-    sudo make run CERT_PATH=~/Workshop/IEdgeInsights-v1.5LTS/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=flase
+sudo make run CERT_PATH=$EIS_HOME/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=false
 ```
 Now there will no longer by a video output - only the JSON object in the terminal:
 
