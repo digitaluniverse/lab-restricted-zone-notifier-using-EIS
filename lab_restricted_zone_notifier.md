@@ -1,51 +1,52 @@
 ## Deploying Restricted Zone Notifier using Intel® Edge Insights Software framework
 ### Lab Overview
-In our previous Lab, we have successfully created a new application using the Intel® Edge Insights Framework.We will deploy the Restricted zone notifier reference implementation using Intel® Edge Insights Framework.
+In our previous lab, we have successfully created a new application using the Intel® Edge Insights Framework. We will deploy the Restricted Zone N otifier reference implementation using Intel® Edge Insights Framework.
 
 ### Steps to Complete this lab:
 
 - Integrate the application configuration into EIS
-- Customize visualizer application in order to view the resulting output.
+- Customize the visualizer application in order to view the resulting output.
 - Download the model and video files.
-- Setup OPC/UA server to receive warning messages form the classifier.
+- Setup the OPC-UA server to receive warning messages form the classifier.
 - Run the application using different Intel's Accelerators(CPU/GPU/MYRIAD).
 
 
 ## Integrating Configuration into EIS
 
-In the previous lab we created a custom application configuration called **restricted_zone_notifier.json**. We will not configure the EIS framework to use that configuration. 
+In the previous, lab we created a custom application configuration called **restricted_zone_notifier.json**. To use that configuration file in the EIS framework, perform the following steps: 
 
-We will need to upate the following files:
+We will need to upDate the following files:
 
-- IEdgeinsights/docker_setup/.env
-- IEdgeinsights/VideoIngestion/VideoIngestion.py
-- IEdgeinsights/DataAnalytics/PointDataAnalytics/classifer_setup.py
+- $EIS_HOME/docker_setup/.env
+- $EIS_HOME/VideoIngestion/VideoIngestion.py
+- $EIS_HOME/DataAnalytics/PointDataAnalytics/classifer_setup.py
 
 #### Update the environment
-- To complete this, run the following commands in the terminal
+- To complete this, run the following commands in the terminal:
 
     ```bash
-    cd  ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup
+    cd  $EIS_HOME/docker_setup
     sudo gedit .env
     ```
-- Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
-- Make sure that DEV_MODE = false 
+- Set the **IEI_SERVICE** variable to the configuration file **services_video.json**
+- Set the **CONFIG_FILE** variable to the configuration file **restricted_zone_notifier.json**
+- Set that **DEV_MODE** to **false **
 
 #### Update VideoIngestion module
 - To complete this, run the following commands in the terminal
 
     ```bash
-    cd  ~/Workshop/IEdgeInsights-v1.5LTS/VideoIngestion
+    cd  $EIS_HOME/VideoIngestion
     sudo gedit VideoIngestion.py
     ```
-- Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
+- Find and replace the name of the configuration file **factory_pcbdemo.json** with **restricted_zone_notifier.json** .
 
 
 #### Update classifier setup
 - To complete this, run the following commands in the terminal
 
     ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/DataAnalytics/PointDataAnalytics
+    cd $EIS_HOMEj/DataAnalytics/PointDataAnalytics
     sudo gedit classifier_startup.py
     ```
 - Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
@@ -55,11 +56,11 @@ We will need to upate the following files:
 
 For visualizing the results of the video analytics, the a visualizer app is available with the IEdgeInsights software framework. This is a sample app which uses the OPC-UA client for receiving the analytics results and the GRPC client for receiving the image frames and do a simple visualization.
 
-To customize the visualizer application(visualizer.py) modify the **config .json** file available in  **~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer/** path.
+To customize the visualizer application(visualizer.py) modify the **config.json** file available in  **$EIS_HOME/tools/visualizer/** path.
 
 - To complete this task run the following commands to complete this task
     ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
+    cd $EIS_HOME/tools/visualizer
     sudo gedit config.json
     ```
 and replace the contents of the config.json with the below configuration details to view the result in a single window
@@ -76,7 +77,7 @@ and replace the contents of the config.json with the below configuration details
 We will be using a test video from the Intel IoT DevKit repository. It shows workers entering a simulated restricted zone and will be used to test the EIS pipeline.
 
 ```bash
-cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/test_videos
+cd $EIS_HOME/docker_setup/test_videos
 wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-detection.mp4
 ```
 
@@ -84,7 +85,7 @@ wget https://github.com/intel-iot-devkit/sample-videos/raw/master/worker-zone-de
 The ia_data_analytics docker container which runs the classification using openVINO requires a specific person detection model to detect when workers enter the restricted zone. Usually you would use the OpenVINO model downloader to get the models but we will just pull them from the workshop Github repo.  The model files need to be copied into the docker setup path so that the ia_data_analytics container can locate it:
 
 ```bash
-cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup/config/algo_config
+cd $EIS_HOME/docker_setup/config/algo_config
 mkdir restricted_zone_notifier
 cd restricted_zone_notifier
 wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/master/Models/person-detection-retail-0013-fp16.bin
@@ -97,7 +98,7 @@ wget https://github.com/SSG-DRD-IOT/lab-restricted-zone-notifier-using-EIS/raw/m
 - Run the following commands
 
     ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/cert-tool
+    cd $EIS_HOME/cert-tool
     python3 main.py
     ```
 
@@ -107,7 +108,7 @@ We are now ready to build and run out application with the certificates that wer
 - Run the following commands
 
     ```bash
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/docker_setup
+    cd $EIS_HOME/docker_setup
     sudo make provision CERT_PATH=../cert-tool/Certificates/
     sudo make install CERT_PATH=../cert-tool/Certificates/
     ```
@@ -124,9 +125,9 @@ We are now ready to build and run out application with the certificates that wer
 
     ```bash
     sudo make distlibs
-    cd ~/Workshop/IEdgeInsights-v1.5LTS/tools/visualizer
+    cd $EIS_HOME/tools/visualizer
     sudo make build
-    sudo make run CERT_PATH=~/Workshop/IEdgeInsights-v1.5LTS/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=true
+    sudo make run CERT_PATH=$EIS_HOME/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=true
     ```
 
  On successful execution, the application sends a warning message when a person is detected in the restricted zone. The output looks like below screenshot.
