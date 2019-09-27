@@ -96,7 +96,7 @@ Next copy and paste this text into the newly created file:
         }
     },
     "triggers": {
-        "restricted_zone_notifier_trigger": {
+        "bypass_trigger": {
             "training_mode": false
         }
     },
