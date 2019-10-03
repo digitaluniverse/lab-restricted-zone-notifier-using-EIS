@@ -46,7 +46,7 @@ We will need to upDate the following files:
 - To complete this, run the following commands in the terminal
 
     ```bash
-    cd $EIS_HOMEj/DataAnalytics/PointDataAnalytics
+    cd $EIS_HOME/DataAnalytics/PointDataAnalytics
     sudo gedit classifier_startup.py
     ```
 - Find and replace the name of the configuration file ```factory_pcbdemo.json ``` with ```restricted_zone_notifier.json``` .
