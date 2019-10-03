@@ -157,7 +157,7 @@ Fetching individual frames from the image store via the Data Agent can slow down
 Let's increase the through put of our application by disabling the video frames from being fetched and displayed:
 
 ```bash
-cd ~$EIS_HOME/tools/visualizer
+cd $EIS_HOME/tools/visualizer
 sudo make run CERT_PATH=$EIS_HOME/cert-tool/Certificates/ HOST=localhost IMAGE_DIR=/opt/intel/iei/saved_images DISPLAY_IMG=false
 ```
 Now there will no longer by a video output - only the JSON object in the terminal:
@@ -179,7 +179,7 @@ The Restricted zone notifier application can be run on different hardwares by cu
 Execute the following commands:
 
     ```bash
-    cd $EIS_HOME/docker_setup/config/alog_config/
+    cd $EIS_HOME/docker_setup/config/algo_config/
     sudo gedit restricted_zone_notifier.json
     ```
 - Change the device to GPU ```device=GPU``` inside JSON file
